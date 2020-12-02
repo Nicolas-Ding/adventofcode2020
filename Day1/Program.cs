@@ -15,6 +15,7 @@ namespace Day1
                 line = Console.ReadLine();
             }
 
+            // Note, this code doesn't work if there is a solution using the same number multiple times, it will be detected by this code even if not accepted by the problem
             foreach (int left in set)
             {
                 foreach (int middle in set)
