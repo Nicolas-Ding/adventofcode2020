@@ -8,14 +8,9 @@ namespace Day5
     {
         public static void Main()
         {
-            string line = Console.ReadLine(); ;
-            HashSet<int> seats = new HashSet<int>();
-            do
-            {
-                int id = ComputeId(line);
-                seats.Add(id);
-                line = Console.ReadLine();
-            } while (!string.IsNullOrEmpty(line));
+            HashSet<int> seats = Utils.Utils.ReadLinesFromConsole()
+                .Select(ComputeId)
+                .ToHashSet();
 
             Console.WriteLine(Enumerable
                 .Range(seats.Min() + 1, seats.Count - 2)
