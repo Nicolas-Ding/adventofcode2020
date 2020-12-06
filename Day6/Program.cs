@@ -11,26 +11,20 @@ namespace Day6
         {
             int unionCount = 0;
             int intersectCount = 0;
-            IEnumerable<char> intersectChars;
-            IEnumerable<char> unionChars;
+            string unionChars = "";
 
             do
             {
-                unionChars = new List<char>();
-                intersectChars = Enumerable.Range('a', 26).Select(_ => (char)_).ToList();
-                Utils.Utils.ReadLinesFromConsole()
-                    .ToList()
-                    .ForEach(_ =>
-                    {
-                        unionChars = _.Union(unionChars);
-                        intersectChars = _.Intersect(intersectChars);
-                    });
-                unionCount += unionChars.Count();
-                intersectCount += intersectChars.Count();
-            } while (unionChars.Any());
+                var inputs = Utils.Utils.ReadLinesFromConsole().ToList();
+
+                unionChars = inputs.Aggregate("", (prev, next) => new string(prev.Union(next).ToArray()));
+                intersectCount += inputs.Aggregate(unionChars, (prev, next) => new string(prev.Intersect(next).ToArray())).Length;
+
+                unionCount += unionChars.Length;
+            } while (unionChars.Length > 0);
 
             Console.WriteLine($"Union : {unionCount}");
-            Console.WriteLine($"Intersect : {intersectCount - 26}");
+            Console.WriteLine($"Intersect : {intersectCount}");
         }
     }
 }
