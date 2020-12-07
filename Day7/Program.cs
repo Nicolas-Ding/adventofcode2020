@@ -8,44 +8,41 @@ namespace Day7
 {
     class Program
     {
-        public static Regex InputLineRegexp = new Regex(@"(?<containerColor>.*?) bags contain (?<containedColors>.*?)\.");
-        public static Regex ColoredBagRegexp = new Regex(@"(?<containedNumber>\d) (?<containedColor>.*?) bags?");
+        public static Regex LineRegexp = new Regex(@"^(?<containerColor>.*?) bags contain (?:(?<noOtherBag>no other bags)|((?<containedNumber>\d) (?<containedColor>.*?) bags?)(?:, (?!\.))?)+.$");
 
         static void Main(string[] args)
         {
             Dictionary<string, HashSet<string>> canBeContainedBy = new Dictionary<string, HashSet<string>>();
             Dictionary<string, Dictionary<string, int>> containsBags = new Dictionary<string, Dictionary<string, int>>();
+
             Utils.Utils.ReadLinesFromConsole()
                 .ToList()
                 .ForEach(line =>
                 {
-                    Match match = InputLineRegexp.Match(line);
+                    Match match = LineRegexp.Match(line);
                     string containerColor = match.Groups["containerColor"].Value;
                     if (!canBeContainedBy.ContainsKey(containerColor))
                     {
                         canBeContainedBy[containerColor] = new HashSet<string>();
                     }
-
                     containsBags[containerColor] = new Dictionary<string, int>();
-
-                    if (match.Groups["containedColors"].Value == "no other bags")
+                    if (match.Groups["noOtherBag"].Success)
                     {
                         return;
                     }
 
-                    match.Groups["containedColors"].Value.Split(", ").ToList().ForEach(containedColorString =>
+                    for (var i = 0; i < match.Groups["containedNumber"].Captures.Count; i++)
                     {
-                        Match containedMatch = ColoredBagRegexp.Match(containedColorString);
-                        string containedColor = containedMatch.Groups["containedColor"].Value;
+                        string containedColor = match.Groups["containedColor"].Captures[i].Value;
+                        int containedNumber = int.Parse(match.Groups["containedNumber"].Captures[i].Value);
                         if (!canBeContainedBy.ContainsKey(containedColor))
                         {
                             canBeContainedBy[containedColor] = new HashSet<string>();
                         }
 
                         canBeContainedBy[containedColor].Add(containerColor);
-                        containsBags[match.Groups["containerColor"].Value][containedColor] =
-                            int.Parse(containedMatch.Groups["containedNumber"].Value);
-                    });
+                        containsBags[match.Groups["containerColor"].Value][containedColor] = containedNumber;
+                    }
                 });
 
             // Part 1
@@ -61,7 +58,7 @@ namespace Day7
                     colorsQueue.Enqueue(newContainer);
                 }
             }
-            Console.WriteLine($"Number of bag colors that can contain at least one shiny gold : {canContainShinyGold.Count}");
+            Console.WriteLine($"Number of bag colors that can contains at least one shiny gold : {canContainShinyGold.Count}");
 
             // Part 2
             Queue<(string, int)> containedBagsQueue = new Queue<(string, int)>();
