@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Utils;
 
 namespace Day7
 {
-    class Program
+    public class Program : BaseMain
     {
         public static Regex InputLineRegexp = new Regex(@"(?<containerColor>.*?) bags contain (?<containedColors>.*?)\.");
         public static Regex ColoredBagRegexp = new Regex(@"(?<containedNumber>\d) (?<containedColor>.*?) bags?");
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            RunAndTime(AocDay7, 20);
+        }
 
+        static void AocDay7()
+        {
             Dictionary<string, HashSet<string>> canBeContainedBy = new Dictionary<string, HashSet<string>>();
             Dictionary<string, Dictionary<string, int>> containsBags = new Dictionary<string, Dictionary<string, int>>();
             Utils.Utils.ReadLinesFromFile("input.txt")
@@ -52,6 +55,9 @@ namespace Day7
                 });
 
             // Part 1
+            long frequency = Stopwatch.Frequency;
+            long nanosecPerTick = (1000L * 1000L * 1000L) / frequency;
+
             HashSet<string> canContainShinyGold = new HashSet<string>();
             Queue<string> colorsQueue = new Queue<string>();
             colorsQueue.Enqueue("shiny gold");
@@ -64,6 +70,7 @@ namespace Day7
                     colorsQueue.Enqueue(newContainer);
                 }
             }
+
             Console.WriteLine($"Number of bag colors that can contains at least one shiny gold : {canContainShinyGold.Count}");
 
             // Part 2
@@ -80,7 +87,6 @@ namespace Day7
                 }
             }
             Console.WriteLine($"Number of bag that a shiny gold contains : {result}");
-            Console.WriteLine($"Ellapsed milliseconds : {stopwatch.ElapsedMilliseconds}");
         }
     }
 }

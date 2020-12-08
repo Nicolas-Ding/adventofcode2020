@@ -7,11 +7,6 @@ namespace Utils
 {
     public class Utils
     {
-        public static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
-
         public static IEnumerable<string> ReadLinesFromConsole()
         {
             string line = Console.ReadLine();
@@ -24,7 +19,7 @@ namespace Utils
 
         public static IEnumerable<string> ReadLinesFromFile(string filename)
         {
-            using StreamReader file = new StreamReader(@filename);
+            using StreamReader file = new StreamReader(filename);
             string line = file.ReadLine();
             while (!string.IsNullOrEmpty(line))
             {
