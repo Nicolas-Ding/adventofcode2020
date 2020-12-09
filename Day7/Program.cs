@@ -12,7 +12,7 @@ namespace Day7
         public static Regex InputLineRegexp = new Regex(@"(?<containerColor>.*?) bags contain (?<containedColors>.*?)\.");
         public static Regex ColoredBagRegexp = new Regex(@"(?<containedNumber>\d) (?<containedColor>.*?) bags?");
 
-        public static void Main(string[] args)
+        public new static void Main(string[] args)
         {
             RunAndTime(AocDay7, 20);
         }

@@ -12,7 +12,7 @@ namespace Utils
         {
         }
 
-        public static void RunAndTime(Action aocProgram, int times = 1)
+        public static void RunAndTime(Action aocProgram, int times = 1, Action readFile = null)
         {
             List<long> allTimes = new List<long>();
             long minTime = int.MaxValue;
@@ -21,6 +21,10 @@ namespace Utils
 
             for (int i = 0; i < times; i++)
             {
+                if (readFile != null)
+                {
+                    readFile();
+                }
                 stopwatch.Restart();
                 aocProgram();
                 long ellapsed = stopwatch.ElapsedMilliseconds;
