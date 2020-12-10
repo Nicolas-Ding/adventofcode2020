@@ -7,7 +7,7 @@ namespace Day9
 {
     class Program : BaseMain
     {
-        static void Main(string[] args)
+        new static void Main(string[] args)
         {
             RunAndTime(Day9, 20);
         }
@@ -61,7 +61,7 @@ namespace Day9
                     minIndex++;
                 }
             }
-            Console.WriteLine($"Could some to {cumsum} by taking numbers from {minIndex} to {maxIndex}");
+            Console.WriteLine($"Could sum to {cumsum} by taking numbers from {minIndex} to {maxIndex}");
             var resultList = input.Skip(minIndex).Take(maxIndex - minIndex + 1).ToList();
             Console.WriteLine($"Numbers were {string.Join(", ", resultList)}");
             Console.WriteLine($"Checking... the sum is actually {resultList.Sum()}");
