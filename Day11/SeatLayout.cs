@@ -114,7 +114,9 @@ namespace Day11
             return Map.Aggregate(0, (i, list) => 3 * i + list.Aggregate(0, (i1, c) => 2 * i1 + c));
         }
 
+#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         public override bool Equals(object? obj)
+#pragma warning restore CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
         {
             if (!(obj is SeatLayout)) return false;
 
