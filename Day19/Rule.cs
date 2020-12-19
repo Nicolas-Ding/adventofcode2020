@@ -27,15 +27,15 @@ namespace Day19
             }
 
             int position = 0;
-            Console.WriteLine($"Calling IsMatch on input = {input} and rule {this}. There are {PossibleRules.Count} possible rules");
+            //Console.WriteLine($"Calling IsMatch on input = {input} and rule {this}. There are {PossibleRules.Count} possible rules");
             return (PossibleRules.Any(subRule =>
             {
-                Console.WriteLine($"  testing subrule {string.Join("", subRule)}");
+                //Console.WriteLine($"  testing subrule {string.Join("", subRule)}");
                 position = 0;
                 foreach (int rule in subRule)
                 {
                     var result = allRules[rule].IsMatch(allRules, input.Substring(position));
-                    Console.WriteLine($"    Called IsMatch on input = {input.Substring(position)}, position = {position} and rule {allRules[rule]}, result was {result.isMatch}");
+                    //Console.WriteLine($"    Called IsMatch on input = {input.Substring(position)}, position = {position} and rule {allRules[rule]}, result was {result.isMatch}");
                     if (!result.isMatch)
                     {
                         return false;
