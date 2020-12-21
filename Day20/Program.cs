@@ -101,6 +101,8 @@ namespace Day20
                 }
             }
 
+            Console.WriteLine();
+
             foreach (List<char> l in fullImage)
             {
                 Console.WriteLine(new string(l.ToArray()));
@@ -157,10 +159,6 @@ namespace Day20
 
         static int CountResult(List<string> image)
         {
-            string line1 = "..................#.";
-            string line2 = "#....##....##....###";
-            string line3 = ".#..#..#..#..#..#...";
-
             int count = 0;
             for (int i = 0; i < image.Count() - 2; i++)
             {
